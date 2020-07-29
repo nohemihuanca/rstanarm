@@ -145,7 +145,7 @@ functions {
   real gamma_lp(real gamma, int dist, real mean, real scale, real df) {
     if (dist == 1)  // normal
       target += normal_lpdf(gamma | mean, scale);
-    else if (dist == 2)  // student_t
+    if (dist == 2)  // student_t
       target += student_t_lpdf(gamma | df, mean, scale);
     /* else dist is 0 and nothing is added */
     return target();
@@ -818,7 +818,7 @@ model {
       if (nrcens > 0) eta_rcens += log_crude_event_rate;
       if (nicens > 0) eta_icens += log_crude_event_rate;
       if (ndelay > 0) eta_delay += log_crude_event_rate;
-      
+
       // add on intercept to linear predictor
       if (has_intercept == 1) {
         if (nevent > 0) eta_event += gamma[1];
@@ -980,8 +980,8 @@ model {
       if (qrcens > 0) eta_qpts_rcens += log_crude_event_rate;
       if (qicens > 0) eta_qpts_icenl += log_crude_event_rate;
       if (qicens > 0) eta_qpts_icenu += log_crude_event_rate;
-      if (qdelay > 0) eta_qpts_delay += log_crude_event_rate;      
-      
+      if (qdelay > 0) eta_qpts_delay += log_crude_event_rate;
+
       // add on intercept to linear predictor
       if (has_intercept == 1) {
         if (Nevent > 0) eta_epts_event += gamma[1];
